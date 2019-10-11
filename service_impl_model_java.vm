@@ -8,13 +8,15 @@ package ${target.javaPackageFromFolder(${SRC})};
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ${ROOT_PKG}.${REPOSITORY_PKG}.${entity.name}Repository;
+import ${ROOT_PKG}.${ENTITY_PKG}.${entity.name};
+import ${ROOT_PKG}.${SERVICE_INTERFACE_PKG}.${entity.name}Service;
 
-import java.util.UUID;
+import java.util.Collections;
 import java.util.List;
 
 /**
 * <h2>${entity.name}Serviceimpl</h2>
-* @author ${AUTHOR_NAME}
 */
 @Service
 @Transactional
@@ -96,6 +98,7 @@ this.repository = repo;
         }
         return total;
     }
+
 
     @Override
     public boolean delete(long id) {
