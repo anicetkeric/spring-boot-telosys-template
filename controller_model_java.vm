@@ -54,6 +54,27 @@ public class ${entity.name}Controller {
 	}
 
 
+@ApiOperation(value = "Create a new data for domain", response = BaseResponse.class)
+@ApiResponses(value = {@ApiResponse(code = 201, message = "Created successfully"),
+@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+@ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
+@ApiResponse(code = 400, message = "something went wrong! ")})
+@PostMapping(value = "/${entity.name.toLowerCase()}")
+public ResponseEntity<BaseResponse> create${entity.name}(@RequestBody @Valid ${entity.name} dto) {
+
+    // process to save data
+    ${entity.name} d = entityService.create(mapper.toEntity(dto));
+    if (d != null) {
+    return new ResponseEntity<>(
+    new BaseResponse(mapper.toDto(d), ApplicationMessage.SUCCESS_MESSAGE_SAVE_ENTITY, true),
+    HttpStatus.CREATED);
+    } else {
+    return new ResponseEntity<>(new BaseResponse(null, ApplicationMessage.ERROR_MESSAGE_SAVE_ENTITY, false),
+    HttpStatus.BAD_REQUEST);
+    }
+
+ }
 
 
 }
