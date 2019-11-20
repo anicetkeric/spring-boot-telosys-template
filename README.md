@@ -1,2 +1,3 @@
-# spring-boot-telosys-template
-Sample Spring boot architecture generator with telosys
+# Spring Boot Rest api - telosys template
+
+Telosys template to generate the spring boot rest api architecture.
