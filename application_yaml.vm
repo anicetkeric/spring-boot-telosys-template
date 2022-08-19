@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: ${PROJECT_NAME} 
+#if ( $databases.hasDatabase( $model.databaseId ) )
+#set($database = $databases.getDatabase( $model.databaseId ))     
+  jpa:
+    open-in-view: false
+    database-platform: $database.type
+    show-sql: false    
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy  
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    username: $database.user
+    password: $database.password
+    url: $database.jdbcUrl 
+#else  
+  jpa:
+    open-in-view: false
+    database-platform: org.h2.Driver
+    show-sql: false    
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy  
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    username: sa
+    password: sa
+    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+#end  
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+
+
+
+

@@ -8,109 +8,120 @@ package ${target.javaPackageFromFolder(${SRC})};
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ${ROOT_PKG}.${REPOSITORY_PKG}.${entity.name}Repository;
-import ${ROOT_PKG}.${ENTITY_PKG}.${entity.name};
-import ${ROOT_PKG}.${SERVICE_INTERFACE_PKG}.${entity.name}Service;
+import ${ROOT_PKG}.repositories.${entity.name}Repository;
+import ${ROOT_PKG}.entities.${entity.name};
+import ${ROOT_PKG}.service.${entity.name}Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+
 
 import java.util.Collections;
 import java.util.List;
 
 /**
-* <h2>${entity.name}Serviceimpl</h2>
-*/
+ * Service Implementation for managing {@link ${entity.name}}.
+ * @author aek
+ */
 @Service
 @Transactional
 public class ${entity.name}ServiceImpl implements ${entity.name}Service {
 
 
-private final ${entity.name}Repository repository;
+    private final ${entity.name}Repository repository;
 
-public ${entity.name}ServiceImpl(${entity.name}Repository repo) {
-this.repository = repo;
-}
+    public ${entity.name}ServiceImpl(${entity.name}Repository repo) {
+         this.repository = repo;
+    }
 
 
- @Override
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public ${entity.name} create(${entity.name} d) {
-
-       ${entity.name} entity;
-
         try {
-            entity = repository.save(d);
+            return repository.save(d);
 
         } catch (Exception ex) {
             return null;
         }
-        return entity;
     }
 
-    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ${entity.name} update(${entity.name} d) {
-        ${entity.name} c;
-
         try {
-            c = repository.saveAndFlush(d);
+            return repository.saveAndFlush(d);
 
         } catch (Exception ex) {
             return null;
         }
-        return c;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public ${entity.name} getOne(long id) {
-        ${entity.name} t;
-
+    public ${entity.name} getOne(${entity.keyAttributes[0].formattedType(0)} id) {
         try {
-            t = repository.findById(id).orElse(null);
+            return repository.findById(id).orElse(null);
 
         } catch (Exception ex) {
             return null;
         }
-        return t;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<${entity.name}> getAll() {
-        List<${entity.name}> lst;
-
         try {
-            lst = repository.findAll();
+            return repository.findAll();
 
         } catch (Exception ex) {
             return Collections.emptyList();
         }
-        return lst;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long getTotal() {
-        long total;
-
         try {
-            total = repository.count();
+            return repository.count();
         } catch (Exception ex) {
             return 0;
         }
-        return total;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean delete(long id) {
-        try {
-            repository.deleteById(id);
-            return true;
-
-        } catch (Exception ex) {
-            return false;
-        }
+    public void delete(${entity.keyAttributes[0].formattedType(0)} id) {
+        repository.deleteById(id);
     }
 
-   
+    /**
+     * {@inheritDoc}
+     */
+   	@Override
+	public Page<${entity.name}> findAllPaginate(Pageable pageable) {
+
+		return repository.findAll(pageable);
+	}
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+	public Page<${entity.name}> findAllSpecification(Specification<${entity.name}> specs, Pageable pageable) {
+		return repository.findAll(specs, pageable);
+	}
 
 }
