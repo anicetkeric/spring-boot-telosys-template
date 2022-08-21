@@ -5,7 +5,7 @@ spring:
 #set($database = $databases.getDatabase( $model.databaseId ))     
   jpa:
     open-in-view: false
-    database-platform: $database.type
+    database-platform: $database.dialect
     show-sql: false    
     hibernate:
       ddl-auto: none
@@ -13,7 +13,7 @@ spring:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy  
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: $database.driverClass
     username: $database.user
     password: $database.password
     url: $database.jdbcUrl 
