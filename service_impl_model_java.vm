@@ -8,9 +8,9 @@ package ${target.javaPackageFromFolder(${SRC})};
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ${ROOT_PKG}.repositories.${entity.name}Repository;
-import ${ROOT_PKG}.entities.${entity.name};
-import ${ROOT_PKG}.service.${entity.name}Service;
+import ${ROOT_PKG}.repositorio.${entity.name}Repositorio;
+import ${ROOT_PKG}.modelo.${entity.name};
+import ${ROOT_PKG}.servicio.${entity.name}Servicio;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -25,13 +25,13 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class ${entity.name}ServiceImpl implements ${entity.name}Service {
+public class ${entity.name}ServicioImpl implements ${entity.name}Servicio {
 
 
-    private final ${entity.name}Repository repository;
+    private final ${entity.name}Repositorio repositorio;
 
-    public ${entity.name}ServiceImpl(${entity.name}Repository repo) {
-         this.repository = repo;
+    public ${entity.name}ServicioImpl(${entity.name}Repositorio repo) {
+         this.repositorio = repo;
     }
 
 
@@ -41,7 +41,7 @@ public class ${entity.name}ServiceImpl implements ${entity.name}Service {
     @Override
     public ${entity.name} create(${entity.name} d) {
         try {
-            return repository.save(d);
+            return repositorio.save(d);
 
         } catch (Exception ex) {
             return null;
@@ -54,7 +54,7 @@ public class ${entity.name}ServiceImpl implements ${entity.name}Service {
     @Override
     public ${entity.name} update(${entity.name} d) {
         try {
-            return repository.saveAndFlush(d);
+            return repositorio.saveAndFlush(d);
 
         } catch (Exception ex) {
             return null;
@@ -67,7 +67,7 @@ public class ${entity.name}ServiceImpl implements ${entity.name}Service {
     @Override
     public ${entity.name} getOne(${entity.keyAttributes[0].formattedType(0)} id) {
         try {
-            return repository.findById(id).orElse(null);
+            return repositorio.findById(id).orElse(null);
 
         } catch (Exception ex) {
             return null;
@@ -80,7 +80,7 @@ public class ${entity.name}ServiceImpl implements ${entity.name}Service {
     @Override
     public List<${entity.name}> getAll() {
         try {
-            return repository.findAll();
+            return repositorio.findAll();
 
         } catch (Exception ex) {
             return Collections.emptyList();
@@ -93,7 +93,7 @@ public class ${entity.name}ServiceImpl implements ${entity.name}Service {
     @Override
     public long getTotal() {
         try {
-            return repository.count();
+            return repositorio.count();
         } catch (Exception ex) {
             return 0;
         }
@@ -104,7 +104,7 @@ public class ${entity.name}ServiceImpl implements ${entity.name}Service {
      */
     @Override
     public void delete(${entity.keyAttributes[0].formattedType(0)} id) {
-        repository.deleteById(id);
+        repositorio.deleteById(id);
     }
 
     /**
@@ -113,7 +113,7 @@ public class ${entity.name}ServiceImpl implements ${entity.name}Service {
    	@Override
 	public Page<${entity.name}> findAllPaginate(Pageable pageable) {
 
-		return repository.findAll(pageable);
+		return repositorio.findAll(pageable);
 	}
 
     /**
@@ -121,7 +121,7 @@ public class ${entity.name}ServiceImpl implements ${entity.name}Service {
      */
     @Override
 	public Page<${entity.name}> findAllSpecification(Specification<${entity.name}> specs, Pageable pageable) {
-		return repository.findAll(specs, pageable);
+		return repositorio.findAll(specs, pageable);
 	}
 
 }

@@ -5,11 +5,11 @@
 */
 package ${target.javaPackageFromFolder(${SRC})};
 
-import ${ROOT_PKG}.entities.${entity.name};
-import ${ROOT_PKG}.service.${entity.name}Service;
+import ${ROOT_PKG}.modelo.${entity.name};
+import ${ROOT_PKG}.servicio.${entity.name}Servicio;
 
 #set( $uncapitalizedEntityName = $fn.uncapitalize($entity.name) )
-#set( $controllerClassName = "${entity.name}Controller" )
+#set( $controllerClassName = "${entity.name}Controlador" )
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 
@@ -34,15 +34,15 @@ import java.util.List;
  * @author @aek
  */
 @RestController
-@RequestMapping("/api/${uncapitalizedEntityName}")
+@RequestMapping("$REST_API_ROOT/${uncapitalizedEntityName}")
 public class $controllerClassName {
 
     private final Logger log = LoggerFactory.getLogger(${controllerClassName}.class);
 	
-    private final ${entity.name}Service entityService;
+    private final ${entity.name}Servicio entityServicio;
 
- 	public $controllerClassName (${entity.name}Service entityService) {
-		this.entityService = entityService;
+ 	public $controllerClassName (${entity.name}Servicio entityServicio) {
+		this.entityServicio = entityServicio;
 	}
 
     /**
@@ -54,7 +54,7 @@ public class $controllerClassName {
 	@PostMapping()
 	public ResponseEntity<${entity.name}> create${entity.name}(@RequestBody @Valid ${entity.name} ${uncapitalizedEntityName}) {
          log.debug("REST request to save ${entity.name} : {}", ${uncapitalizedEntityName});
-         return new ResponseEntity<>(entityService.create(${uncapitalizedEntityName}), HttpStatus.CREATED);
+         return new ResponseEntity<>(entityServicio.create(${uncapitalizedEntityName}), HttpStatus.CREATED);
     }
 
    /**
@@ -68,7 +68,7 @@ public class $controllerClassName {
     @PutMapping()
     public ResponseEntity<${entity.name}> update${entity.name}(@Valid @RequestBody ${entity.name} ${uncapitalizedEntityName}) {
         log.debug("REST request to update ${entity.name} : {}", ${uncapitalizedEntityName});
-        ${entity.name} result = entityService.update(${uncapitalizedEntityName});
+        ${entity.name} result = entityServicio.update(${uncapitalizedEntityName});
         return ResponseEntity.ok().body(result);
     }
 
@@ -81,7 +81,7 @@ public class $controllerClassName {
     @GetMapping()
     public ResponseEntity<List<${entity.name}>> getAll${entity.name}() {
 	    log.debug("REST request to get all ${uncapitalizedEntityName}s");
-        List<${entity.name}> lst = entityService.getAll();
+        List<${entity.name}> lst = entityServicio.getAll();
 
         return new ResponseEntity<>(lst,HttpStatus.OK);
     }
@@ -95,7 +95,7 @@ public class $controllerClassName {
     @GetMapping(value = "/{id}")
     public ResponseEntity<${entity.name}> getOne${entity.name}(@PathVariable("id") ${entity.keyAttributes[0].formattedType(0)} id) {
         log.debug("REST request to get ${entity.name} : {}", id);
-        ${entity.name} e = entityService.getOne(id);
+        ${entity.name} e = entityServicio.getOne(id);
 
         return new ResponseEntity<>(e, HttpStatus.OK);
     }
@@ -109,7 +109,7 @@ public class $controllerClassName {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete${entity.name}(@PathVariable("id") ${entity.keyAttributes[0].formattedType(0)} id) {
         log.debug("REST request to delete ${entity.name} : {}", id);
-        entityService.delete(id);
+        entityServicio.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

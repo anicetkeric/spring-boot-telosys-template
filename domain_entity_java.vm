@@ -34,9 +34,17 @@ import java.io.Serializable;
 #foreach( $import in $java.imports($entity) )
 import $import;
 #end
-#foreach( $import in $jpa.imports($entity) )
-import $import;
-#end
+
+##--- Comentado por jgg75w
+## Lo comento porque en la versión actual de la librería de Telosys que es la 4.0.0 el jpa no está preparado para la versión actual de java y siempre 
+## devuelve javax.persistence.* en lugar de jakarta.persistence.*, por eso comento estas lineas y mientras sale una nueva versión de Telosys lo hacemos a mano.
+##  ver documentación: https://doc.telosys.org/templates/telosys-objects
+##                     https://www.telosys.org/doc/v400/objects/jpa.html 
+## #foreach( $import in $jpa.imports($entity) )
+## import $import;
+## #end
+import jakarta.persistence.*;
+
 
 /**
  * JPA entity class for "${entity.name}"
